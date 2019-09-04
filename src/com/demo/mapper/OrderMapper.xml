@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.OrderDao">
+<insert id="addone" parameterType="com.demo.po.Order">
+insert into bbs_order 
+values(null,#{deliverFee},#{totalPrice},#{orderPrice},#{paymentWay},#{paymentCash},#{delivery},#{isConfirm},#{isPaiy},#{orderState},now(),#{note},#{buyerId})
+<selectKey order="AFTER" keyProperty="id" resultType="java.lang.Long">
+select last_insert_id();
+</selectKey>
+</insert>
+</mapper>

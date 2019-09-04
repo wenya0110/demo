@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.ColorDao">
+    <select id="getByColorId" parameterType="int" resultType="com.demo.po.Color">
+        select * from bbs_color where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.CartDao"> 
+
+<select id="getCountByBuyerid" parameterType="int" resultType="int">
+select count(id) from bbs_cart where buyerid=#{buyerid}
+</select>
+
+    <select id="getByIds" parameterType="com.demo.po.CartVo" resultType="map">
+        select c.* ,p.img_url,p.name as productname,co.name as colorname 
+        from bbs_cart c,bbs_product p,bbs_color co 
+        where c.productid=p.id and co.id=c.colorid
+        and
+        <!--  <where>where里的条件没有的话where里内容不加，sql语句不会报错   -->
+            <foreach collection="ids" item="id" open="c.id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        <!--</where>  -->
+    </select>
+    <delete id="del" parameterType="int">
+        delete from bbs_cart where id = #{id}
+    </delete>
+    <update id="updateNum" parameterType="map">
+        update bbs_cart set num = #{newnum} where id =#{cid}
+    </update>
+    <select id="getByids" parameterType="com.demo.po.Cart" resultType="com.demo.po.Cart">
+        select * from bbs_cart where buyerid=#{buyerid} and productid=#{productid} and colorid=#{colorid} and sizename=#{sizename}
+    </select>
+    
+	<select id="getcarts" parameterType="int" resultType="map">
+	    
+	select c.*,p.name as productname,a.name as colorname ,p.img_url ,s.id as skuid 
+	from bbs_cart c,bbs_product p,bbs_color a ,bbs_sku s 
+	where c.productid=p.id and c.colorid=a.id 
+	and s.productid=p.id and s.colorid=a.id and s.size=c.sizename 
+	and buyerid=#{buyerid}
+	    
+	    
+	</select>
+	
+	<insert id="addone" parameterType="com.demo.po.Cart">
+        insert into bbs_cart values(null,#{buyerid},#{productid},
+        #{num},#{colorid},#{sizename},#{babaprice},#{price},#{isdel},
+        now())
+    </insert>
+</mapper>

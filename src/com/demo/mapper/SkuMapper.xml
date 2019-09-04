@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.SkuDao">
+
+<update id="updateStockById" parameterType="map">
+update bbs_sku set stock=stock-#{num} where id=#{id}
+</update>
+
+    <select id="getByProductId" parameterType="int" resultType="com.demo.po.Sku">
+        select * from bbs_sku where productid=#{pid};
+    </select>
+</mapper>

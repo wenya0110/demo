@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.admin.AdminProductDao">
+ <select id="getByCondition" parameterType="map" resultType="com.demo.po.Product">
+ 	select * from bbs_product where 1=1 
+ 	<if test="name!=null and name!=''">
+ 		and name like #{name}
+ 	</if>
+ 	<if test="brandid != null and brandid>0">
+ 		and brand_id=#{brandid}
+ 	</if>
+ 	<if test="isshow != null">
+ 		and is_show=#{isshow}
+ 	</if>
+ </select>
+ 
+ <select id="getsize" resultType="int">
+ select count(id) from bbs_product
+ </select>
+ 
+ <select id="getByPage" parameterType="int" resultType="com.demo.po.Product">
+ select * from bbs_product limit #{page},5
+ </select>
+ 
+ <insert id="addone" parameterType="com.demo.po.Product">
+ insert into bbs_product values(null,#{brand_id},#{name},#{weight},#{is_new}
+ ,#{is_hot},#{is_commend},0,#{img_url},0,#{description}
+ ,#{packageList},#{colors},#{sizes},now())
+ <selectKey order="AFTER" resultType="long" keyProperty="id">
+ select last_insert_id()
+ </selectKey>
+ </insert>
+</mapper>

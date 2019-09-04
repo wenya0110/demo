@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.admin.AdminBrandDao">
+	<select id="getBrands" resultType="com.demo.po.Brand">
+		select * from bbs_brand
+	</select>
+	
+	<select id="getall" resultType="com.demo.po.Brand">
+      select * from bbs_brand order by sort desc
+    </select>
+	
+	<select id="getbyid" parameterType="int" resultType="com.demo.po.Brand">
+		select * from bbs_brand where id=#{id}
+	</select>
+	<update id="update" parameterType="com.demo.po.Brand">
+		update bbs_brand set name=#{name},description=#{description},
+		imgUrl=#{imgUrl},sort=#{sort},isDisplay=#{isDisplay} 
+		where id=#{id}
+	</update>
+	
+	<insert id="addone" parameterType="com.demo.po.Brand">
+		insert into bbs_brand values(null,#{name},
+		#{description},#{img_url},#{web_site},#{sort},#{is_display}) 
+	</insert>
+		<select id="getsize" resultType="int">
+		select count(id) from bbs_brand
+	</select>
+</mapper>
